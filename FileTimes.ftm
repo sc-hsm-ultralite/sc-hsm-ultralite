@@ -1,4 +1,4 @@
-<filetimes time="2014-11-21T11:36:21.235" filetime="635521665812351674">
+<filetimes time="2014-11-21T17:44:34.161" filetime="635521886741618973">
   <exclude val="bin" />
   <exclude val="obj" />
   <exclude val="Debug" />
@@ -17,7 +17,7 @@
   <exclude val="*.bak" />
   <exclude val="*.log" />
   <exclude val="*.obj" />
-  <file name="README" time="2014-11-21T11:12:37.493" filetime="635521651574937230" size="1331" hash="92NrVAYKOaLLnfuppddAzg==" />
+  <file name="README" time="2014-11-21T17:43:21.056" filetime="635521886010562144" size="1346" hash="MBSLFdaMurtWRtCXC8uKmA==" />
   <file name="msvc\sc-hsm-ultralite-test.net.csproj" time="2014-11-20T11:02:08.794" filetime="635520781287946500" size="6950" hash="TwR6ZpyGk4z5/VFVeqHG+A==" />
   <file name="src\ultralite-tests\c\Makefile" time="2014-11-20T10:41:35.389" filetime="635520768953890350" size="426" hash="deiYQuvnXEsoaSaVH6j/wA==" />
   <file name="src\ultralite\Makefile" time="2014-11-20T09:37:08.412" filetime="635520730284128482" size="308" hash="IjGwBn5zVxnT1qOcvPepQg==" />
