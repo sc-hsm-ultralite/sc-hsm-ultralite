@@ -1,0 +1,37 @@
+sc-hsm-embedded
+===============
+
+Light-weight CT-API and PKCS#11 library for using the SmartCard-HSM in embedded systems
+
+Purpose
+-------
+This module has been developed for facilitate the integration of a SmartCard-HSM in
+embedded systems with a little footprint. Rather than using a PC/SC daemon to manage
+attached card readers and token, the smaller Card Terminal API (CT-API) is used.
+
+Supported Hardware
+------------------
+The module can be compiled for Linux and Windows. It supports the SmartCard-HSM USB-stick
+and SmartCard-HSM cards inserted into an Identive SCR 3310 reader.
+
+The ctccid module uses standard functions from the CCID specification, so the driver may work
+with other CCID compliant readers as well. However, the only reader used during tests is
+the SCR 3310 and the USB-stick.
+
+Build
+-----
+
+PCSC: 
+ Windows: (Note that on Windows the "SmartCard Service" is the equivalent of the pcscd on Unix and is always installed.) 	
+ Unix: The following packages are required
+    pthread
+	pcscd
+	pcscd-dev
+
+CTAPI: 
+ Windows: (Using WinUSB is possible, but not recommended; should only be used for research.)
+ Unix: The following packages are required
+	libusb-1.0
+
+Windows: Visual Studio 2013 is required.
+Unix: Install the required packages and edit "Makefile.config" as necessary (PCSC is the default build). Run make.

@@ -1,0 +1,26 @@
+Makefile.in
+.libs
+.deps
+.dirstamp
+config.*
+configure
+
+# Object files
+*.o
+*.lo
+
+# Libraries
+*.lib
+*.a
+*.la
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
