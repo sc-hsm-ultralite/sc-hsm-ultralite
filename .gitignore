@@ -4,6 +4,15 @@ Makefile.in
 .dirstamp
 config.*
 configure
+*.sdf
+*.opensdf
+*.pdp
+*.cache
+*.suo
+obj
+win32
+x64
+
 
 # Object files
 *.o
