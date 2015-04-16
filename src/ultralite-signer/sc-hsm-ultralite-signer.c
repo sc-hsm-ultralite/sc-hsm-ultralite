@@ -328,14 +328,19 @@ void sign_file(const char* path, const char* pin, const char* label)
 			log_err("error reading metadata from sig file '%s'; will be re-created", sig_path);
 		} else {
 			/* Figure out if we need to re-create the sig file */
-		offset_t hcl = sizeof(hcl) == 4 ? md.cll : (offset_t)md.clh << 32 | md.cll;
+			offset_t hcl = sizeof(hcl) == 4 ? md.cll : (offset_t)md.clh << 32 | md.cll;
 			if (entry_info.st_size == hcl) {
 				/* Unmodified so skip */
 				log_inf("'%s' unmodified", path);
 				return;
+			} else if (entry_info.st_size < hcl) {
+				/* Shrunk so re-sign */
+				log_wrn("'%s' shrunk", path);
+				err = 1; /* force re-sign from beginning of file */
+			} else {
+				/* Modified so re-sign the file using the hash state saved in the metatdata */
+				log_inf("'%s' modified", path);
 			}
-			/* Modified so re-sign the file, using the hash state saved in the metatdata */
-			log_inf("'%s' modified", path);
 		}
 		/* Create/re-create sig file */
 		sign(path, pin, label, err ? 0 : &md);
