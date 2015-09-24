@@ -2,11 +2,13 @@ include ../Makefile.config
 
 ifeq ($(MAKECMDGOALS), clean)
 	DIRS = ctccid
-else ifndef CTAPI
-	MSG = $(info *** Building sc-hsm-embedded with  PCSC interface! ***)
-else
-	DIRS = ctccid
-	MSG = $(info *** Building sc-hsm-embedded with CTAPI interface! ***)
+else 
+	ifndef CTAPI
+		MSG = $(info *** Building sc-hsm-embedded with  PCSC interface! ***)
+	else
+		DIRS = ctccid
+		MSG = $(info *** Building sc-hsm-embedded with CTAPI interface! ***)
+	endif
 endif
 
 $(info *****************************************************)
