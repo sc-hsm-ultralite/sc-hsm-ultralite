@@ -24,10 +24,14 @@ void _log_err(const char* fmt, ...);
 void _log_wrn(const char* fmt, ...);
 void _log_inf(const char* fmt, ...);
 
+#if defined(_DEBUG) || defined(DEBUG)
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 #define BT " (at '" __FILE__ "':" TOSTRING(__LINE__) ")"
 #define log_err(fmt, ...) _log_err(fmt "%s\n", ##__VA_ARGS__, BT)
+#else
+#define log_err(fmt, ...) _log_err(fmt   "\n", ##__VA_ARGS__)
+#endif
 #define log_wrn(fmt, ...) _log_wrn(fmt   "\n", ##__VA_ARGS__)
 #define log_inf(fmt, ...) _log_inf(fmt   "\n", ##__VA_ARGS__) 
 
