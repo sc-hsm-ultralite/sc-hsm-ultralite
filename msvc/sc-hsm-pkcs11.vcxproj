@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\common\mutex.c" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'" />
+    <ClCompile Include="..\src\common\mutex.c" />
     <ClCompile Include="..\src\pkcs11\asn1.c" />
     <ClCompile Include="..\src\pkcs11\certificateobject.c" />
     <ClCompile Include="..\src\pkcs11\dataobject.c" />
@@ -33,8 +33,7 @@
     <ClCompile Include="..\src\pkcs11\pkcs15.c" />
     <ClCompile Include="..\src\pkcs11\privatekeyobject.c" />
     <ClCompile Include="..\src\pkcs11\session.c" />
-    <ClCompile Include="..\src\pkcs11\slot-ctapi.c" Condition="'$(SolutionName)' == 'sc-hsm-ctapi-vs2013'" />
-    <ClCompile Include="..\src\pkcs11\slot-pcsc.c" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'" />
+    <ClCompile Include="..\src\pkcs11\slot-pcsc.c" />
     <ClCompile Include="..\src\pkcs11\slot.c" />
     <ClCompile Include="..\src\pkcs11\slotpool.c" />
     <ClCompile Include="..\src\pkcs11\strbpcpy.c" />
@@ -42,7 +41,7 @@
     <ClCompile Include="..\src\pkcs11\token.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\common\mutex.h" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'" />
+    <ClInclude Include="..\src\common\mutex.h" />
     <ClInclude Include="..\src\pkcs11\asn1.h" />
     <ClInclude Include="..\src\pkcs11\certificateobject.h" />
     <ClInclude Include="..\src\pkcs11\cryptoki.h" />
@@ -55,17 +54,16 @@
     <ClInclude Include="..\src\pkcs11\pkcs11t.h" />
     <ClInclude Include="..\src\pkcs11\pkcs15.h" />
     <ClInclude Include="..\src\pkcs11\privatekeyobject.h" />
-    <ClInclude Include="..\src\pkcs11\resource.h" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'" />
+    <ClInclude Include="..\src\pkcs11\resource.h" />
     <ClInclude Include="..\src\pkcs11\session.h" />
-    <ClInclude Include="..\src\pkcs11\slot-ctapi.h" Condition="'$(SolutionName)' == 'sc-hsm-ctapi-vs2013'" />
-    <ClInclude Include="..\src\pkcs11\slot-pcsc.h" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'" />
+    <ClInclude Include="..\src\pkcs11\slot-pcsc.h" />
     <ClInclude Include="..\src\pkcs11\slot.h" />
     <ClInclude Include="..\src\pkcs11\slotpool.h" />
     <ClInclude Include="..\src\pkcs11\strbpcpy.h" />
     <ClInclude Include="..\src\pkcs11\token-sc-hsm.h" />
     <ClInclude Include="..\src\pkcs11\token.h" />
   </ItemGroup>
-  <ItemGroup Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'">
+  <ItemGroup>
     <ResourceCompile Include="..\src\pkcs11\sc-hsm-pkcs11.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -103,12 +101,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(SolutionName)' == 'sc-hsm-ctapi-vs2013'">
-    <Import Project="sc-hsm-ctapi.props" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'">
-    <Import Project="sc-hsm-pcsc.props" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -123,35 +115,35 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X86);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X64);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X86);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X64);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -160,7 +152,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(SCAPI);CRYPTOKI_EXPORTS;PKCS11_EXPORTS;DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;CRYPTOKI_EXPORTS;PKCS11_EXPORTS;DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -174,10 +166,10 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalOptions>$(SCAPI_LTCG) %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -186,7 +178,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(SCAPI);CRYPTOKI_EXPORTS;PKCS11_EXPORTS;DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;CRYPTOKI_EXPORTS;PKCS11_EXPORTS;DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -200,10 +192,10 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalOptions>$(SCAPI_LTCG) %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -214,7 +206,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(SCAPI);CRYPTOKI_EXPORTS;PKCS11_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;CRYPTOKI_EXPORTS;PKCS11_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/wd4018 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
@@ -227,7 +219,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -238,7 +230,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(SCAPI);CRYPTOKI_EXPORTS;PKCS11_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;CRYPTOKI_EXPORTS;PKCS11_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/wd4018 /wd4267 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
@@ -251,7 +243,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

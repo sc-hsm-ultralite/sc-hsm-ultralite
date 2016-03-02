@@ -211,7 +211,6 @@ static void sign(const char* path, const char* pin, const char* label,
 	   WARNING: sign_hash is not re-entrant (see sc-hsm-ultralite.c) */
 	sig_size = sign_hash(pin, label, hash, sizeof(hash), &pCms);
 	if (sig_size <= 0) {
-		log_err("sign_hash returned error %d", sig_size);
 		goto sign_error;
 	}
 
@@ -429,7 +428,7 @@ int main(int argc, char** argv)
 	/* Check args */
 	if (argc < 4) {
 		fprintf(stderr, "Usage: [-a] pin label path...\n");
-		fprintf(stderr, "Sign the specified file(s) and/or all files within the specified directory(ies).\n");
+		fprintf(stderr, "Signs the specified file(s) and/or files within the specified directory(ies).\n");
 		fprintf(stderr, "  -a  use :p7s instead of .p7s extension (alternate data stream on Windows)\n");
 		return 1;
 	}

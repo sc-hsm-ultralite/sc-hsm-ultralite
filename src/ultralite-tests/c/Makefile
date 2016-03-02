@@ -12,7 +12,7 @@ endif
 
 all: sc-hsm-ultralite-test
 
-OBJ = sc-hsm-ultralite-test.o
+OBJ = sc-hsm-ultralite-test.o ../../ultralite-signer/log.o
 
 sc-hsm-ultralite-test: $(OBJ)
 	$(CC) -o sc-hsm-ultralite-test $(OBJ) ../../ultralite/libsc-hsm-ultralite.a $(ADD_LIB) $(LDFLAGS)
