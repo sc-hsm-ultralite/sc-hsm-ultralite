@@ -178,7 +178,7 @@ static int GetFids(const char *label, uint16 *pKeyFid, uint16 *pTemplateFid)
 	*pTemplateFid = 0;
 	/* - SmartCard-HSM: ENUMERATE OBJECTS */
 	rc = SC_ProcessAPDU(
-		0, 0x00,0x58,0x00,0x00,
+		0, 0x80,0x58,0x00,0x00,
 		0, 0,
 		list, sizeof(list),
 		&sw1sw2);

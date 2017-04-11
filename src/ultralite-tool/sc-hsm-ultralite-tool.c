@@ -348,7 +348,7 @@ int DumpAllFiles(const char *pin)
 
 	/* - SmartCard-HSM: ENUMERATE OBJECTS */
 	rc = SC_ProcessAPDU(
-		0, 0x00,0x58,0x00,0x00,
+		0, 0x80,0x58,0x00,0x00,
 		NULL, 0,
 		list, sizeof(list),
 		&sw1sw2);
