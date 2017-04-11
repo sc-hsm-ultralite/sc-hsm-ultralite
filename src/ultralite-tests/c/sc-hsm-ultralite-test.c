@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <ultralite/log.h>
 #include <ultralite/sc-hsm-ultralite.h>
 
 #ifdef _WIN32
@@ -23,10 +24,14 @@
 #include <crtdbg.h>
 #endif
 #include <windows.h>
+/* define below after <stdio.h> */
+#define snprintf _snprintf
 #ifndef usleep
 #define usleep(us) Sleep((us) / 1000)
 #endif
 #else
+#include <dirent.h>
+#define MAX_PATH PATH_MAX
 /* Windows GetTickCount() returns ms since startup.
  * This function returns ms since the Epoch.
  * Since we're doing a delta it's OK
@@ -41,11 +46,10 @@ long GetTickCount()
 
 int main(int argc, char **argv)
 {
-	int i;
+	int i, rv;
 	FILE* fp;
 	unsigned char buf[0x10000], hash[32]; /* 32 => 256-bit sha256 */
 	sha256_context ctx;
-	char name[256];
 	const unsigned char *pCms = 0;
 	int count = argc >= 4 ? atoi(argv[3]) : 1;
 	int wait  = argc >= 5 ? atoi(argv[4]) : 10000;
@@ -56,16 +60,25 @@ int main(int argc, char **argv)
 
 	/* Check args */
 	if (argc < 3) {
-		printf("Usage: pin label [count [wait-in-milliseconds]]\nSign this executable (%s).\n", argv[0]);
+		fprintf(stderr, "Usage: pin label [count [wait]]\n");
+		fprintf(stderr, "Signs this executable.\n");
+		fprintf(stderr, "If the optional argument 'count' is specified, repeats signing 'count' times.\n");
+		fprintf(stderr, "If the optional argument 'wait'  is specified, waits 'wait' ms between each\n");
+		fprintf(stderr, "signing operation. By default, waits 10 seconds between operations.\n");
 		return 1;
 	}
+
+	/* Disable buffering on stdout/stderr to prevent mixing the order of
+	   messages to stdout/stderr when redirected to the same log file */
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
 
 	/* Create a SHA-256 hash of this executable */
 	sha256_starts(&ctx);
 	fp = fopen(argv[0], "rb");
 	if (!fp) {
 		int e = errno;
-		printf("error opening file '%s': %s\n", argv[0], strerror(e));
+		log_err("error opening file '%s': %s", argv[0], strerror(e));
 		return e;
 	}
 	for (;;) {
@@ -74,34 +87,54 @@ int main(int argc, char **argv)
 			break;
 		sha256_update(&ctx, buf, n);
 	}
-	fclose(fp);
+	rv = fclose(fp);
+	if (rv) {
+		int e = errno;
+		log_err("error closing file '%s': %s", argv[0], strerror(e));
+		return e;
+	}
 	sha256_finish(&ctx, hash);
 
 	/* Sign the hash of this executable n times, where n = count */
+	rv = 0;
 	for (i = 0; i < count; i++) {
-		int len;
+		int n, len;
 		long start, end;
+		char sig_path[MAX_PATH];
 		if (i > 0 && count > 1) {
-			printf("wait %d milliseconds for next signature\n", wait);
+			log_inf("wait %d ms for next signature", wait);
 			usleep(wait * 1000);
 		}
 		start = GetTickCount();
 		len   = sign_hash(argv[1], argv[2], hash, sizeof(hash), &pCms);
 		end   = GetTickCount();
-		printf("sign_hash returned: %d, time used: %ld ms\n", len, end - start);
-		if (len <= 0) /* sign_hash error */
-			break;
-		sprintf(name, "%s.p7s", argv[0]);
-		fp = fopen(name, "wb");\
-		if (!fp) {
-			int e = errno;
-			printf("error opening file '%s': %s\n", name, strerror(e));
+		if (len <= 0) { /* sign_hash error */
+			rv = len;
 			break;
 		}
-		fwrite(pCms, 1, len, fp);
+		log_inf("test ok, time used: %ld ms", end - start);
+		n = snprintf(sig_path, sizeof(sig_path), "%s.p7s", argv[0]);
+		if (n < 0 || n >= sizeof(sig_path)) {
+			rv = ENAMETOOLONG;
+			log_err("error building sig file path '%s.p7s'", argv[0]);
+			break;
+		}
+		fp = fopen(sig_path, "wb");
+		if (!fp) {
+			int e = rv = errno;
+			log_err("error opening file '%s': %s", sig_path, strerror(e));
+			break;
+		}
+		n = fwrite(pCms, 1, len, fp);
+		if (n != len) {
+			int e = rv = ferror(fp);
+			log_err("error writing to sig file '%s': %s", sig_path, strerror(e));
+			fclose(fp);
+			break;
+		}
 		fclose(fp);
 	}
 	release_template();
 
-	return 0;
+	return rv;
 }

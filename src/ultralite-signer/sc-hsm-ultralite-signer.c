@@ -124,6 +124,8 @@ void release_lock(void* _fd)
 #endif
 #endif
 
+static char* sig_ext; /* either '.p7s' or ':p7s' */
+
 /**
  * Sign the file at the specified path using the private
  * key with the specified label on a token with the specified pin
@@ -209,14 +211,13 @@ static void sign(const char* path, const char* pin, const char* label,
 	   WARNING: sign_hash is not re-entrant (see sc-hsm-ultralite.c) */
 	sig_size = sign_hash(pin, label, hash, sizeof(hash), &pCms);
 	if (sig_size <= 0) {
-		log_err("sign_hash returned error %d", sig_size);
 		goto sign_error;
 	}
 
 	/* Open the new sig file for writing */
-	n = snprintf(sig_path, sizeof(sig_path), "%s.p7s", path);
+	n = snprintf(sig_path, sizeof(sig_path), "%s%s", path, sig_ext);
 	if (n < 0 || n >= sizeof(sig_path)) {
-		log_err("error building sig file path '%s.p7s'", path);
+		log_err("error building sig file path '%s%s'", path, sig_ext);
 		goto sign_error;
 	}
 	fpo = fopen(sig_path, "wb");
@@ -289,8 +290,8 @@ void sign_file(const char* path, const char* pin, const char* label)
 {
 	int n, err;
 	struct stat entry_info;
-	struct stat sig_info;
 	char sig_path[PATH_MAX] = "";
+	FILE* fp;
 
 	/* Stat the entry */
 	err = stat(path, &entry_info);
@@ -310,15 +311,18 @@ void sign_file(const char* path, const char* pin, const char* label)
 		return;
 	}
 
-	/* Build associated sig file path (i.e. <path>/<filename>.p7s) */
-	n = snprintf(sig_path, sizeof(sig_path), "%s.p7s", path);
+	/* Build associated sig file path (i.e. <path>/<filename><sig_ext>) */
+	n = snprintf(sig_path, sizeof(sig_path), "%s%s", path, sig_ext);
 	if (n < 0 || n >= sizeof(sig_path)) {
-		log_err("error building sig file path '%s.p7s'", path);
+		log_err("error building sig file path '%s%s'", path, sig_ext);
 		return;
 	}
 
-	/* Stat the sig file to see if one exists yet */
-	err = stat(sig_path, &sig_info);
+	/* Try to open the sig file to see if one exists yet */
+	fp = fopen(sig_path, "rb");
+	err = errno;
+	if (fp)
+		fclose(fp);
 
 	if (!err) { /* Sig file found => figure out if we need to re-create it */
 		/* Read the metadata from the sig file */
@@ -328,14 +332,19 @@ void sign_file(const char* path, const char* pin, const char* label)
 			log_err("error reading metadata from sig file '%s'; will be re-created", sig_path);
 		} else {
 			/* Figure out if we need to re-create the sig file */
-		offset_t hcl = sizeof(hcl) == 4 ? md.cll : (offset_t)md.clh << 32 | md.cll;
+			offset_t hcl = sizeof(hcl) == 4 ? md.cll : (offset_t)md.clh << 32 | md.cll;
 			if (entry_info.st_size == hcl) {
 				/* Unmodified so skip */
 				log_inf("'%s' unmodified", path);
 				return;
+			} else if (entry_info.st_size < hcl) {
+				/* Shrunk so re-sign */
+				log_wrn("'%s' shrunk", path);
+				err = 1; /* force re-sign from beginning of file */
+			} else {
+				/* Modified so re-sign the file using the hash state saved in the metatdata */
+				log_inf("'%s' modified", path);
 			}
-			/* Modified so re-sign the file, using the hash state saved in the metatdata */
-			log_inf("'%s' modified", path);
 		}
 		/* Create/re-create sig file */
 		sign(path, pin, label, err ? 0 : &md);
@@ -379,11 +388,12 @@ void sign_files(const char* path, const char* pin, const char* label)
 		if (entry->d_name[0] == '.')
 			continue;
 
-		/* TODO: Allow recursion on sub-directories? */
-
-		/* Skip ".p7s" files */
+		/* Skip ".p7s" & ":p7s" files */
 		ext = strrchr(entry->d_name, '.');
 		if (ext && (strcmp(ext, ".p7s") == 0))
+			continue;
+		ext = strrchr(entry->d_name, ':');
+		if (ext && (strcmp(ext, ":p7s") == 0))
 			continue;
 
 		/* Create the full path to the entry */
@@ -409,7 +419,7 @@ void sign_files(const char* path, const char* pin, const char* label)
 
 int main(int argc, char** argv)
 {
-	int i;
+	int i, usealt;
 	const char * pin, * label;
 #ifdef CTAPI
 	void* mutex;
@@ -417,12 +427,15 @@ int main(int argc, char** argv)
 
 	/* Check args */
 	if (argc < 4) {
-		fprintf(stderr, "Usage: pin label path...\n");
-		fprintf(stderr, "Sign the specified file(s) and/or all files within the specified directory(ies).\n");
+		fprintf(stderr, "Usage: [-a] pin label path...\n");
+		fprintf(stderr, "Signs the specified file(s) and/or files within the specified directory(ies).\n");
+		fprintf(stderr, "  -a  use :p7s instead of .p7s extension (alternate data stream on Windows)\n");
 		return 1;
 	}
-	pin = argv[1];
-	label = argv[2];
+	usealt  = strcmp(argv[1], "-a") == 0;
+	pin     = !usealt ? argv[1] : argv[2];
+	label   = !usealt ? argv[2] : argv[3];
+	sig_ext = !usealt ? ".p7s"  : ":p7s";
 
 	/* Disable buffering on stdout/stderr to prevent mixing the order of
 	   messages to stdout/stderr when redirected to the same log file */
@@ -445,7 +458,7 @@ int main(int argc, char** argv)
 
 	/* For each path arg, sign either the specified file
 	   or all the files in the specified directory */
-	for (i = 3; i < argc; i++) {
+	for (i = !usealt ? 3 : 4; i < argc; i++) {
 		int err;
 		struct stat info;
 		char* path = argv[i];

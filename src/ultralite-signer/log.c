@@ -17,7 +17,7 @@
 
 /* WARNING: These functions are NOT thread-safe. */
 
-#define ERR_TIMESTAMP "0000-00-00T00:00:00.000000000+00:00"
+#define ERR_TIMESTAMP "0000-00-00T00:00:00.000+00:00"
 static char timestamp[64];
 
 #ifdef _WIN32
@@ -41,14 +41,14 @@ const char* GetTimestamp()
 	long long nowft;
 	struct tm lt;
 	time_t t64;
-	int seconds, nanos;
+	int seconds, millis;
 	long gmtoff;
 	char strf[20]; /* 20 => length of yyyy-mm-ddThh:mm:ss + null term */
 	GetSystemTimeAsFileTime((FILETIME*)&nowft);
 	if (unix_base == 0)
 		init_unix_base();
 	seconds = (int)((nowft - unix_base) / 10000000);
-	nanos = (int)(nowft % 10000000 * 100);
+	millis = (int)(nowft % 10000000 / 10000);
 	t64 = seconds;
 	err = _localtime64_s(&lt, &t64);
 	if (err)
@@ -61,7 +61,7 @@ const char* GetTimestamp()
 	n = strftime(strf, sizeof(strf), "%Y-%m-%dT%H:%M:%S", &lt);
 	if (n == 0)
 		return ERR_TIMESTAMP;
-	n = _snprintf(timestamp, sizeof(timestamp), "%s.%09d%+03d:%02d", strf, nanos, -gmtoff / 3600, abs(gmtoff) % 3600 / 60);
+	n = _snprintf(timestamp, sizeof(timestamp), "%s.%03d%+03d:%02d", strf, millis, -gmtoff / 3600, abs(gmtoff) % 3600 / 60);
 	if (n < 0 || n >= sizeof(timestamp))
 		return ERR_TIMESTAMP;
 	return timestamp;
@@ -86,7 +86,7 @@ const char* GetTimestamp()
 	n = strftime(strf, sizeof(strf), "%Y-%m-%dT%H:%M:%S", &lt);
 	if (n == 0)
 		return ERR_TIMESTAMP;
-	n = snprintf(timestamp, sizeof(timestamp), "%s.%06d%+03d:%02d", strf, (int)tv.tv_usec, gmtoff / 3600, gmtoff % 3600 / 60);
+	n = snprintf(timestamp, sizeof(timestamp), "%s.%03d%+03d:%02d", strf, (int)tv.tv_usec / 1000, gmtoff / 3600, gmtoff % 3600 / 60);
 	if (n < 0 || n >= sizeof(timestamp))
 		return ERR_TIMESTAMP;
 	return timestamp;

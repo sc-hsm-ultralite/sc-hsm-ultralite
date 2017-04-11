@@ -68,12 +68,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(SolutionName)' == 'sc-hsm-ctapi-vs2013'">
-    <Import Project="sc-hsm-ctapi.props" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(SolutionName)' == 'sc-hsm-pcsc-vs2013'">
-    <Import Project="sc-hsm-pcsc.props" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -88,38 +82,38 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X86);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
     <TargetName>sc-hsm-ultralite</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X64);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
     <TargetName>sc-hsm-ultralite</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X86);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
     <TargetName>sc-hsm-ultralite</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\$(Platform)\$(SCAPI)\$(Configuration)\</OutDir>
+    <OutDir>..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)$(MSBuildProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SCAPI_LIBS_PATH_X64);$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
     <TargetName>sc-hsm-ultralite</TargetName>
   </PropertyGroup>
@@ -129,7 +123,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(SCAPI);DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -140,10 +134,10 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>$(SCAPI_LTCG) /IGNORE:4049 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4049 %(AdditionalOptions)</AdditionalOptions>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
@@ -154,7 +148,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(SCAPI);DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;DEBUG;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -165,10 +159,10 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>$(SCAPI_LTCG) /IGNORE:4049 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4049 %(AdditionalOptions)</AdditionalOptions>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
@@ -181,7 +175,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(SCAPI);_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <CompileAs>CompileAsC</CompileAs>
       <AdditionalOptions>/wd4018 %(AdditionalOptions)</AdditionalOptions>
@@ -192,7 +186,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4049 %(AdditionalOptions)</AdditionalOptions>
@@ -208,7 +202,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(SCAPI);_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PCSC;_CRT_SECURE_NO_WARNINGS;WIN32;WIN32_LEAN_AND_MEAN;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <CompileAs>CompileAsC</CompileAs>
       <AdditionalOptions>/wd4018 /wd4267 %(AdditionalOptions)</AdditionalOptions>
@@ -219,7 +213,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SCAPI_LINK_LIBS);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4049 %(AdditionalOptions)</AdditionalOptions>
