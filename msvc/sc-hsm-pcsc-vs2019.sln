@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sc-hsm-pkcs11", "sc-hsm-pkcs11.vcxproj", "{B5F4F293-44EF-404E-848F-7985BFA63137}"
 EndProject
@@ -30,6 +30,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sc-hsm-ultralite (dll)", "sc-hsm-ultralite(dll).vcxproj", "{2F95A161-81B8-4DDD-84DC-757948D9C27A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sc-hsm-ultralite (static)", "sc-hsm-ultralite(static).vcxproj", "{2131D1C2-8C1F-40F7-9190-D65CBA2A3EBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC704016-EBB3-4963-946B-86E6E48ADC77}"
+	ProjectSection(SolutionItems) = preProject
+		..\README = ..\README
+		README.txt = README.txt
+		SDKv7.1A.reg = SDKv7.1A.reg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,5 +113,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62EFAFA9-E9C6-4544-870E-9950583A5A7A}
 	EndGlobalSection
 EndGlobal

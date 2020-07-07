@@ -121,9 +121,9 @@ int SC_Open(const char *pin, const char* reader)
 				};
 				DWORD name_len = 0;
 				DWORD state;
-				LPBYTE atr[24];
+				BYTE atr[24];
 				DWORD atr_len = sizeof(atr);
-				rc = SCardStatus(hCard, NULL, &name_len, &state, &proto, (LPBYTE)&atr, &atr_len);
+				rc = SCardStatus(hCard, NULL, &name_len, &state, &proto, atr, &atr_len);
 				if (rc == SCARD_S_SUCCESS && atr_len == sizeof(ATR) && memcmp(atr, ATR, sizeof(ATR)) == 0) {
 					found = 1;
 					break;

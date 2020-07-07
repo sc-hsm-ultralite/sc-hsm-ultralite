@@ -1,4 +1,4 @@
-<filetimes time="2017-05-11T15:56:19.2860965" filetime="636301149792860965" version="4.1.0.2" git="1">
+<filetimes time="2021-03-05T12:59:16.7112129" filetime="637505459567112129" version="4.1.0.4" git="1">
   <file name=".gitignore" time="2017-04-11T13:24:29.3265644" filetime="636275138693265644" size="4565" hash="ZNFlUvZm/DbXmW4nIguRYg==" />
   <file name="AUTHORS" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="124" hash="rLHEgksc7CDQYnP9UNSXDQ==" />
   <file name="COPYING" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="1540" hash="VbhUpHeVNpZFL2mKOvXeHA==" />
@@ -9,23 +9,25 @@
   <file name="etc\udev\rules.d\99-sc_hsm.rules" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="243" hash="IjAVMWW17QisoILXxxsEZA==" />
   <file name="Makefile" time="2014-11-19T19:31:14.1577932" filetime="635520222741577932" size="61" hash="5BzqsA/T0HpDWkx5gSnONQ==" />
   <file name="Makefile.config" time="2014-11-19T23:07:53.0338036" filetime="635520352730338036" size="490" hash="tp0kpzcHOvCSg1a33O+x+Q==" />
-  <dir name="msvc" time="2014-01-20T22:13:43.5736509" filetime="635258528235736509" hash="tjwttGXkeQivjO9yOZvGHQ==" />
-  <file name="msvc\sc-hsm-pcsc-vs2017.sln" time="2017-04-11T13:58:05.3414124" filetime="636275158853414124" size="7336" hash="h+0bC4Xdh3/QzPRxoILc+A==" />
-  <file name="msvc\sc-hsm-pkcs11-test.vcxproj" time="2017-05-11T15:07:58.7263008" filetime="636301120787263008" size="11700" hash="Gvw0K+fA7XRbQma1Afr5xA==" />
-  <file name="msvc\sc-hsm-pkcs11.vcxproj" time="2017-05-11T15:07:58.7575516" filetime="636301120787575516" size="13552" hash="G2wV+5VaNoNntt0l0IGYyw==" />
-  <file name="msvc\sc-hsm-ultralite(dll).vcxproj" time="2017-05-11T15:07:58.5544176" filetime="636301120785544176" size="11974" hash="isFuTrq1fmnLiR7/7TsEfA==" />
-  <file name="msvc\sc-hsm-ultralite(static).vcxproj" time="2017-05-11T15:07:58.4919120" filetime="636301120784919120" size="11835" hash="8aqePdribCUVut88OUJsqg==" />
-  <file name="msvc\sc-hsm-ultralite-signer.vcxproj" time="2017-05-11T15:07:58.6794227" filetime="636301120786794227" size="12494" hash="EXraHqBtUgA8oJ53lipOMw==" />
+  <dir name="msvc" time="2014-01-20T22:13:43.5736509" filetime="635258528235736509" hash="JhPp2mVOBxe8L5/BrbxXbw==" />
+  <file name="msvc\README.txt" time="2020-07-09T09:55:54.0917441" filetime="637298853540917441" size="753" hash="pSbP48QRhrNLrSlvijeBGQ==" />
+  <file name="msvc\sc-hsm-pcsc-vs2019.sln" time="2020-07-09T09:45:56.1624955" filetime="637298847561624955" size="7765" hash="eAifP0VMrkSlVMTCsKkXRg==" />
+  <file name="msvc\sc-hsm-pkcs11-test.vcxproj" time="2020-07-07T10:27:27.2300016" filetime="637297144472300016" size="11624" hash="GnztkE3JlzvDHECpMGbOEw==" />
+  <file name="msvc\sc-hsm-pkcs11.vcxproj" time="2020-07-07T10:27:27.2456527" filetime="637297144472456527" size="13476" hash="F+FS758IRyfyFif/qzOKcw==" />
+  <file name="msvc\sc-hsm-ultralite(dll).vcxproj" time="2020-07-07T10:27:27.1206523" filetime="637297144471206523" size="11898" hash="4KOvkCRdcDhluSBEfTyNVQ==" />
+  <file name="msvc\sc-hsm-ultralite(static).vcxproj" time="2020-07-07T10:27:27.1050313" filetime="637297144471050313" size="11759" hash="/2pGsdorBzE7nBTn8BvBoA==" />
+  <file name="msvc\sc-hsm-ultralite-signer.vcxproj" time="2020-07-07T15:15:39.9537436" filetime="637297317399537436" size="12418" hash="ygNeGF8z1Mm1bXNcY8+YdA==" />
   <file name="msvc\sc-hsm-ultralite-test.net.csproj" time="2016-02-29T11:47:25.8199218" filetime="635923432458199218" size="6736" hash="zITNQxcgRqf//tw20Go59A==" />
-  <file name="msvc\sc-hsm-ultralite-test.vcxproj" time="2017-05-11T15:07:58.6481717" filetime="636301120786481717" size="12230" hash="g2DMk2jebCRbUl+HfSh2ww==" />
-  <file name="msvc\sc-hsm-ultralite-tool.vcxproj" time="2017-05-11T15:07:58.6012936" filetime="636301120786012936" size="12110" hash="NcOqq9KVIG2TQemmcgwCDg==" />
+  <file name="msvc\sc-hsm-ultralite-test.vcxproj" time="2020-07-07T10:27:27.1675456" filetime="637297144471675456" size="12154" hash="athZ6wVkVB6O2Ne84M04bQ==" />
+  <file name="msvc\sc-hsm-ultralite-tool.vcxproj" time="2020-07-07T10:27:27.1363028" filetime="637297144471363028" size="12034" hash="B6TPSKAPk8BasbsvaCGi+w==" />
+  <file name="msvc\SDKv7.1A.reg" time="2020-07-08T12:34:14.9721829" filetime="637298084549721829" size="208" hash="+dY2YJtsJI2daUpP5i1hWg==" />
   <file name="README" time="2014-11-21T17:43:21.0562144" filetime="635521886010562144" size="1346" hash="MBSLFdaMurtWRtCXC8uKmA==" />
-  <dir name="src" time="2013-08-15T15:03:57.0000000" filetime="635121758370000000" hash="Hst5ZRIo50wtYORX1npUug==" />
+  <dir name="src" time="2013-08-15T15:03:57.0000000" filetime="635121758370000000" hash="ZK52CcHNi+N9s4zM6a7h8A==" />
   <file name="src\afxres.h" time="2017-04-11T13:47:16.3730633" filetime="636275152363730633" size="158" hash="QSBMxpiMeT2N5zudQNc4Uw==" />
   <dir name="src\common" time="2014-01-20T22:07:40.5298860" filetime="635258524605298860" hash="PEsOz+g3VOWRI8L0WanuIw==" />
   <file name="src\common\mutex.c" time="2014-01-30T00:00:48.7324908" filetime="635266368487324908" size="4744" hash="OOiUD7Hg/dqigQvRI8hQYg==" />
   <file name="src\common\mutex.h" time="2014-01-29T21:31:16.8697732" filetime="635266278768697732" size="3096" hash="CFtkw6fl4+qBlm5hxzMIMQ==" />
-  <dir name="src\ctccid" time="2014-01-20T22:07:40.5328862" filetime="635258524605328862" hash="8ZLZ7l4zu3kw5OVVsgT9cQ==" />
+  <dir name="src\ctccid" time="2014-01-20T22:07:40.5328862" filetime="635258524605328862" hash="5cLhDgNK4q5LaH5gjQt96w==" />
   <file name="src\ctccid\ccidAPDU.c" time="2014-11-14T15:29:30.6722000" filetime="635515757706722000" size="3589" hash="EWD7dfmQm/7j+uimZoNy+A==" />
   <file name="src\ctccid\ccidT1.c" time="2014-11-14T15:13:57.5236801" filetime="635515748375236801" size="14887" hash="X0th1zRZPE2mecJ8c0//fQ==" />
   <file name="src\ctccid\ccidT1.h" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="6462" hash="VdNDH2weyXNvSyD8xB1R6A==" />
@@ -42,7 +44,7 @@
   <file name="src\ctccid\usb_device.c" time="2014-11-14T15:25:36.8462000" filetime="635515755368462000" size="10919" hash="ocknjvFzInTpkPPamobd8g==" />
   <file name="src\ctccid\usb_device.h" time="2014-11-14T15:13:57.7576546" filetime="635515748377576546" size="3441" hash="M9u6zaJa4bT9cOe23fzI9w==" />
   <file name="src\Makefile" time="2016-02-29T10:27:49.6584643" filetime="635923384696584643" size="602" hash="42lBlK/HSu4iLPMyR8jeHQ==" />
-  <dir name="src\pkcs11" time="2013-08-15T15:03:57.0000000" filetime="635121758370000000" hash="/45wLuoIybJsbeVlX9qe8w==" />
+  <dir name="src\pkcs11" time="2013-08-15T15:03:57.0000000" filetime="635121758370000000" hash="aVc234FrhpiNrX/aNgDRRg==" />
   <file name="src\pkcs11\asn1.c" time="2013-08-25T11:26:13.0000000" filetime="635130267730000000" size="13228" hash="TlZdBP1SWUl/Hluf/2mRjw==" />
   <file name="src\pkcs11\asn1.h" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="3072" hash="frZxDM2ge5MaXSp0DBD1mg==" />
   <file name="src\pkcs11\certificateobject.c" time="2013-08-25T11:29:42.0000000" filetime="635130269820000000" size="9089" hash="7PJWFBUehq8ypJ6tjzsVzQ==" />
@@ -86,12 +88,12 @@
   <file name="src\pkcs11\token-sc-hsm.h" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="4117" hash="tkdI9lKSgAsdOCMln1fVdQ==" />
   <file name="src\pkcs11\token.c" time="2013-08-26T20:44:53.0000000" filetime="635131466930000000" size="8173" hash="Z5AKW5WqOwG3f+uPrYRUoA==" />
   <file name="src\pkcs11\token.h" time="2013-08-26T20:44:53.0000000" filetime="635131466930000000" size="2793" hash="2Kzzukt0p+N4PRRgCMazyQ==" />
-  <dir name="src\tests" time="2013-08-15T15:03:57.0000000" filetime="635121758370000000" hash="VGJGBCPQMPy86tI19qh75w==" />
+  <dir name="src\tests" time="2013-08-15T15:03:57.0000000" filetime="635121758370000000" hash="ldVI4F6LN+C2rPM9JcwLbQ==" />
   <file name="src\tests\ctccid-test.c" time="2014-11-19T12:04:00.2539008" filetime="635519954402539008" size="15121" hash="WOnIjxeg9LC0MWZAxG3bWw==" />
   <file name="src\tests\Makefile" time="2014-11-19T22:39:22.9322616" filetime="635520335629322616" size="464" hash="AeQhliHT2HtaWYxAIT7f/Q==" />
   <file name="src\tests\sc-hsm-pkcs11-test.c" time="2014-11-19T12:30:54.2012393" filetime="635519970542012393" size="54153" hash="JyrrzYS4WTXyppES2pRukg==" />
-  <dir name="src\ultralite" time="2014-01-20T22:07:40.5638880" filetime="635258524605638880" hash="BPB5ZS0eq/ezET2LVcHZHQ==" />
-  <dir name="src\ultralite-signer" time="2014-02-13T10:51:29.8544000" filetime="635278854898544000" hash="jO4ARxFUQTft/1YMbRJlDg==" />
+  <dir name="src\ultralite" time="2014-01-20T22:07:40.5638880" filetime="635258524605638880" hash="Gnr7u3qTPG8YfZ7HrMXoEQ==" />
+  <dir name="src\ultralite-signer" time="2014-02-13T10:51:29.8544000" filetime="635278854898544000" hash="qN+P0UdCalNhR8ZKt5UpKw==" />
   <dir name="src\ultralite-signer\ext-win" time="2014-02-13T10:51:29.8232000" filetime="635278854898232000" hash="g/I7gmwMCrGcHLBxbbLe/Q==" />
   <file name="src\ultralite-signer\ext-win\dirent.h" time="2014-02-13T10:51:29.8388000" filetime="635278854898388000" size="25139" hash="WO4YV2brnr1hYYOiBg6PAA==" />
   <file name="src\ultralite-signer\log.c" time="2016-03-01T12:10:45.8227046" filetime="635924310458227046" size="3188" hash="JPISdT8WplEN9h5WK+3NXQ==" />
@@ -103,18 +105,18 @@
   <file name="src\ultralite-signer\sc-hsm-ultralite-signer.rc" time="2017-05-11T15:00:57.6004726" filetime="636301116576004726" size="4574" hash="RTHdLbAa7Yj9bWHRPizy3g==" />
   <file name="src\ultralite-signer\sc-hsm-ultralite-signer.sh" time="2016-02-29T10:27:49.7992096" filetime="635923384697992096" size="2552" hash="1G14qCAnCa6OoPlHmiKTdA==" />
   <file name="src\ultralite-signer\tee2.sh" time="2016-02-29T10:27:49.7992096" filetime="635923384697992096" size="683" hash="BChoD4F3J+nIfEKnRMFhxw==" />
-  <dir name="src\ultralite-tests" time="2014-02-13T10:51:29.8700000" filetime="635278854898700000" hash="Jr/GehPlPafmCFMoP5dkIg==" />
-  <dir name="src\ultralite-tests\c" time="2014-02-13T10:51:29.8700000" filetime="635278854898700000" hash="RIv6x7HcSj0RNkZZ94NNMw==" />
+  <dir name="src\ultralite-tests" time="2014-02-13T10:51:29.8700000" filetime="635278854898700000" hash="NMGUtqsPCyeYwZXXePI3iw==" />
+  <dir name="src\ultralite-tests\c" time="2014-02-13T10:51:29.8700000" filetime="635278854898700000" hash="RG2NJMMW0qgKk/CkcdDlww==" />
   <file name="src\ultralite-tests\c\Makefile" time="2016-03-02T09:16:12.4919191" filetime="635925069724919191" size="456" hash="ejrj5AQ2uNwAU6Xb0fpKOg==" />
   <file name="src\ultralite-tests\c\resource.h" time="2016-02-29T12:31:03.8853789" filetime="635923458638853789" size="840" hash="MKItsui7CxmDXHJ8PHlirA==" />
   <file name="src\ultralite-tests\c\sc-hsm-ultralite-test.c" time="2016-03-01T19:34:31.4119637" filetime="635924576714119637" size="3835" hash="kQvGKH08DfZTYtn4H7DrjA==" />
   <file name="src\ultralite-tests\c\sc-hsm-ultralite-test.rc" time="2017-05-11T15:02:30.7451323" filetime="636301117507451323" size="4558" hash="UAyWS3yo9wRsRa22tbzhgA==" />
-  <dir name="src\ultralite-tests\dotnet" time="2014-11-17T14:21:12.0954000" filetime="635518308720954000" hash="ARGUo49NKzyVJdUOAxnEKQ==" />
+  <dir name="src\ultralite-tests\dotnet" time="2014-11-17T14:21:12.0954000" filetime="635518308720954000" hash="gscqElPVY7t+yboNSgH8Gg==" />
   <file name="src\ultralite-tests\dotnet\Program.cs" time="2014-11-17T14:21:12.0954000" filetime="635518308720954000" size="3292" hash="G1ByLzt603EiiYTEUbDFKA==" />
-  <dir name="src\ultralite-tests\dotnet\Properties" time="2014-11-17T14:21:12.0954000" filetime="635518308720954000" hash="FS9OSSKfemI9HC4ItFrGBw==" />
+  <dir name="src\ultralite-tests\dotnet\Properties" time="2014-11-17T14:21:12.0954000" filetime="635518308720954000" hash="Hg7feNp4ltz8cFAUuiwcJA==" />
   <file name="src\ultralite-tests\dotnet\Properties\AssemblyInfo.cs" time="2017-05-11T15:05:54.3564294" filetime="636301119543564294" size="1887" hash="pbbwJHaNTVdopXwfX7b+Zg==" />
   <file name="src\ultralite-tests\Makefile" time="2014-11-19T23:40:29.0460895" filetime="635520372290460895" size="53" hash="7xMM1lp52CRSMuOIvcI0LA==" />
-  <dir name="src\ultralite-tool" time="2014-02-13T14:47:15.1013000" filetime="635278996351013000" hash="Idjvc6vDt29oA54SXwATyQ==" />
+  <dir name="src\ultralite-tool" time="2014-02-13T14:47:15.1013000" filetime="635278996351013000" hash="jLl6EcCH4NXUAS1GQErIog==" />
   <file name="src\ultralite-tool\Makefile" time="2014-11-19T23:28:18.3845403" filetime="635520364983845403" size="395" hash="9IzG26S/RFEzm4aC99JyVg==" />
   <file name="src\ultralite-tool\resource.h" time="2016-02-29T12:35:45.4907469" filetime="635923461454907469" size="840" hash="8EzFBtr2U/AQpHK4/hnXWg==" />
   <file name="src\ultralite-tool\sc-hsm-ultralite-tool.c" time="2017-04-11T10:40:38.2341786" filetime="636275040382341786" size="12576" hash="MvP0lOVHB4BcMHToRCNsUg==" />
@@ -128,6 +130,6 @@
   <file name="src\ultralite\sc-hsm-ultralite.c" time="2017-04-11T10:25:55.6157433" filetime="636275031556157433" size="22199" hash="87OfKkL8U9VHzgrdE5Iy1g==" />
   <file name="src\ultralite\sc-hsm-ultralite.h" time="2014-11-20T09:22:23.7038910" filetime="635520721437038910" size="2649" hash="mbhrnjJEQTZ5DXFRs+Pe7g==" />
   <file name="src\ultralite\sha256.c" time="2013-07-04T16:00:00.0000000" filetime="635085504000000000" size="9025" hash="OrWENTu53ZP8xEBRg2ZUpQ==" />
-  <file name="src\ultralite\utils.c" time="2014-03-13T23:31:51.5792336" filetime="635303503115792336" size="9479" hash="lT6MU9vnJtogb+7M5GuoQg==" />
+  <file name="src\ultralite\utils.c" time="2021-03-05T12:58:04.0526958" filetime="637505458840526958" size="9468" hash="yM3UtSqpKsq9GKnN/xZWeQ==" />
   <file name="src\ultralite\utils.h" time="2014-11-20T09:22:40.9988712" filetime="635520721609988712" size="1736" hash="G6iD7uaTqCIVjeMzSULkpA==" />
 </filetimes>

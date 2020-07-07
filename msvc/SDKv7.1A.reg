@@ -1,0 +1,6 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v7.1A]
+"InstallationFolder"="C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v7.1A\\"
+"ProductVersion"="7.1.51106"
+
