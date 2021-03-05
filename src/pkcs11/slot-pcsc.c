@@ -58,10 +58,14 @@
 
 extern struct p11Context_t *context;
 
-static unsigned char ATR[] = { /* expected (A)nswer (T)o (R)equest */
+static unsigned char ATRs[][24] = { /* expected (A)nswer (T)o (R)equest */
 	0x3B, 0xFE, 0x18, 0x00, 0x00, 0x81, 0x31, 0xFE,
 	0x45, 0x80, 0x31, 0x81, 0x54, 0x48, 0x53, 0x4D,
-	0x31, 0x73, 0x80, 0x21, 0x40, 0x81, 0x07, 0xFA
+	0x31, 0x73, 0x80, 0x21, 0x40, 0x81, 0x07, 0xFA,
+
+	0x3B, 0xDE, 0x96, 0xFF, 0x81, 0x91, 0xFE, 0x1F,
+	0xC3, 0x80, 0x31, 0x81, 0x54, 0x48, 0x53, 0x4D,
+	0x31, 0x73, 0x80, 0x21, 0x40, 0x81, 0x07, 0x92,
 };
 
 #ifdef DEBUG
@@ -403,7 +407,7 @@ static int checkForNewPCSCToken(struct p11Slot_t *slot)
 	WORD feature;
 	DWORD featurecode, lenr, atrlen, readernamelen, state, protocol;
 	unsigned char buf[256];
-	unsigned char atr[36];
+	unsigned char atr[sizeof(ATRs[0])];
 #ifdef DEBUG
 	char str75[_75];
 #endif
@@ -435,7 +439,9 @@ static int checkForNewPCSCToken(struct p11Slot_t *slot)
 		FUNC_FAILS(CKR_DEVICE_ERROR, pcsc_error_to_string(rc, str75));
 	}
 
-	if (!(atrlen == sizeof(ATR) && memcmp(atr, ATR, sizeof(ATR)) == 0)) {
+	if (atrlen != sizeof(ATRs[0]) ||
+		memcmp(atr, ATRs[0], atrlen) != 0 && memcmp(atr, ATRs[1], atrlen) != 0)
+	{
 		FUNC_FAILS(CKR_TOKEN_NOT_RECOGNIZED, "ATR mismatch.");
 	}
 

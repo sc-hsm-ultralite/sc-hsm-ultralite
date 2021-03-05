@@ -90,7 +90,7 @@ int SC_Close()
 static SCARDCONTEXT hContext;
 static SCARDHANDLE hCard;
 
-int SC_Open(const char *pin, const char* reader)
+int SC_Open(const char *pin, const char* notused)
 {
 	int rc, len, found;
 	LPSTR readerNames, readerName;
@@ -102,34 +102,26 @@ int SC_Open(const char *pin, const char* reader)
 	}
 	readersLen = SCARD_AUTOALLOCATE;
 	rc = SCardListReaders(hContext, 0, (LPTSTR)&readerNames, &readersLen);
-	if (rc != SCARD_S_SUCCESS) {
+	if (rc != SCARD_S_SUCCESS || readerNames == NULL/*avoid compiler warning*/) {
 		log_err("no reader found");
 		rc = SCardReleaseContext(hContext);
 		return ERR_READER;
 	}
+	hCard = 0;
 	found = 0;
+	// find 1st token which supports the CardContact application (see SC_Logon)
 	for (readerName = readerNames; readerName[0] != 0; readerName += len) {
 		DWORD proto;
 		len = strlen(readerName) + 1;
 		rc = SCardConnect(hContext, readerName, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T1, &hCard, &proto);
 		if (rc == SCARD_S_SUCCESS) {
-			if (reader == 0 || strcmp(reader, readerName) == 0) {
-				static BYTE ATR[] = { /* expected (A)nswer (T)o (R)equest */
-					0x3B, 0xFE, 0x18, 0x00, 0x00, 0x81, 0x31, 0xFE,
-					0x45, 0x80, 0x31, 0x81, 0x54, 0x48, 0x53, 0x4D,
-					0x31, 0x73, 0x80, 0x21, 0x40, 0x81, 0x07, 0xFA
-				};
-				DWORD name_len = 0;
-				DWORD state;
-				BYTE atr[24];
-				DWORD atr_len = sizeof(atr);
-				rc = SCardStatus(hCard, NULL, &name_len, &state, &proto, atr, &atr_len);
-				if (rc == SCARD_S_SUCCESS && atr_len == sizeof(ATR) && memcmp(atr, ATR, sizeof(ATR)) == 0) {
-					found = 1;
-					break;
-				}
+			if (SC_Logon(NULL) == 0) {
+				found = 1;
+				break;
+			} else {
+				SCardDisconnect(hCard, SCARD_LEAVE_CARD);
+				hCard = 0;
 			}
-			SCardDisconnect(hCard, SCARD_LEAVE_CARD);
 		}
 	}
 	SCardFreeMemory(hContext, readerNames);
@@ -162,11 +154,21 @@ int SC_Logon(const char *pin)
 {
 	uint16 sw1sw2;
 	int rc, pinLen;
-
+/*
+The SELECT APDU allows the terminal to select the SmartCard-HSM application on the
+device. The application is identified by the application identifier:
+E8 2B 06 01 04 01 81 C3 1F 02 01
+The aid represents the object identifier
+iso(1) org(3) dod(6) internet(1) private(4) enterprise(1)
+CardContact(24991) iso7816(2) smartcardhsm(1)
+*/
+	static uint8 aid[] = {
+		0xE8, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x81, 0xC3, 0x1F, 0x02, 0x01
+	};
 	/* - SmartCard-HSM: SELECT APPLICATION */
 	rc = SC_ProcessAPDU(
 		0, 0x00,0xA4,0x04,0x0C,
-		(uint8*)"\xE8\x2B\x06\x01\x04\x01\x81\xc3\x1f\x02\x01", 11,
+		aid, sizeof(aid),
 		NULL, 0,
 		&sw1sw2);
 	if (rc < 0) {
@@ -196,17 +198,17 @@ int SC_Logon(const char *pin)
 		break;
 	case 0x6700:
 		log_err("verify pin returned 0x%x: Wrong length", sw1sw2);
-		return ERR_APDU;
+		return ERR_PIN;
 	case 0x6982:
 		log_err("verify pin returned 0x%x: Authentication method blocked", sw1sw2);
-		return ERR_APDU;
+		return ERR_PIN;
 	default:
 		if ((sw1sw2 & 0xfff0) == 0x63C0) {
 			log_err("verify pin returned 0x%x: Wrong PIN, %d tries left", sw1sw2, sw1sw2 & 0xf);
-			return ERR_APDU;
+			return ERR_PIN;
 		}
 		log_err("verify pin returned 0x%x", sw1sw2);
-		return ERR_APDU;
+		return ERR_PIN;
 	}
 	return rc;
 }

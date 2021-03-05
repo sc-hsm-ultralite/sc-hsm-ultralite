@@ -52,14 +52,7 @@
 	The template is cached internally for reuse. However it is also robust against a token change.
 	
 	This specific token supports both ECDSA and RSA.  This library also supports ECDSA (prime256v1 == secp256r1),
-	with a few caveats.  Because the ECDSA signature consists of 2 ASN.1 enclosed big unsigned ints (R, S)
-	the length of the signature is not constant. This makes simple patching impossible (ASN.1 issue).
-	A work-around is to always encode R and S with the maximum representation length. Since an ASN.1 integer 
-	is interpreted as negative if it has the highest bit set, a leading 0 byte must be prepended for positive
-	values where the highest bit would be set. In contrast, this library always prepends 0. If that violates 
-	the standard is not clear, however most	crypto libraries accept the expanded signature. Windows actually 
-	require R and S packed (fixed length), that is the original signature must be transformed anyway before 
-	passed to the verify function.
+	with a few caveats.
 
 	WARNINGS:
 
@@ -463,7 +456,6 @@ static int PatchECDSATemplate(const uint8 *hash, int hashLen)
 {
 	int rc;
 	uint8 hashToSign[32];
-	uint8 *sig;
 	rc = PatchSignedAttributes(hash, hashLen, hashToSign, sizeof(hashToSign));
 	if (rc < 0)
 		return rc;
@@ -471,49 +463,69 @@ static int PatchECDSATemplate(const uint8 *hash, int hashLen)
 	if (rc < 0)
 		return rc;
 	/*
-		Expand to fixed length.
-		Expanding is used to obtain a fixed-length signature. A fixed-length
-		signature is convenient for signing with a template (otherwise all
-		previous nodes need to be adjusted and probably moved).
-		An ASN.1 INTEGER is signed. If we want to encode an unsigned integer
-		(like in almost all cases of cryptography) and the highest bit is set
-		a leading 0 must be added. An additional leading 0 violates the DER but
-		not the BER encoding. A ECDSA signature needs not to be DER encoded because
-		it is never hashed or bitwise compared.
-
 		The following is returned by the token:
 		ASN.1 encoding of ECDSA and DSA signature: total length ... 70, 71 or 72
 		SEQUENCE // length: ... 68, 69 or 70
 			r INTEGER // length: ... 32 or 33 if MSBit set
 			s INTEGER // length: ... 32 or 33 if MSBit set
-
-		This library expands r and s to a fixed length as follows:
-		expanded ASN.1 encoding: (total length 72)
-		0x00=00: 0x30 0x46 //  SEQUENCE of length 0x46 (== 70)
-		0x02=02: 0x02 0x21 // r INTEGER of length 0x21 (== 33)
-		0x25=37: 0x02 0x21 // s INTEGER of length 0x21 (== 33)
-		0x48=72:
 	*/
-	sig = This->pCms + This->SignatureOff;
-	if ((57 <= rc && rc <= 72) && sig[0] == 0x30) {
-		int ri = 2 + 2;          /*  index of r data */
-		int rl = sig[ri - 1];    /* length of r data */
-		int si = 2 + 2 + rl + 2; /*  index of s data */
-		int sl = sig[si - 1];    /* length of s data */
-		if (rl > 33 || sl > 33)
-			return ERR_INVALID; /* should never happen */
-		/* due to inplace moving we must start with s */
-		memmove(sig + 72 - sl, sig + si, sl); /* move data of s to end  */
-		memset(sig + 37 + 2, 0, 33 - sl);     /* set leading zeros of s */
-		sig[38] = 33;                         /* set length of s        */
-		sig[37] = 0x02;                       /* set INTEGER tag        */
-		memmove(sig + 37 - rl, sig + ri, rl); /* move data of r         */
-		memset(sig + 2 + 2, 0, 33 - rl);      /* set leading zeros of r */
-		sig[ 3] = 33;                         /* set length of r        */
-		sig[ 2] = 0x02;                       /* set INTEGER tag        */
-		sig[ 1] = 70;                         /* set lenth of SEQUENCE  */
-		/* sig[0] = 0x30; */
-		return 72;
+	int delta = 72 - rc;
+	int l;
+	if (delta > 0) { /* patch the length fields of the containing ASN.1 elements */
+		This->CMSLen -= delta;
+		uint8* p = This->pCms;
+		if (p[0] != 0x30 || p[1] != 0x82) // SEQUENCE
+			return ERR_TEMPLATE;
+		l = p[2] << 8 | p[3];
+		l -= delta;
+		p[2] = l >> 8; p[3] = l; // adjust length
+		p += 4;
+
+		if (p[0] != 0x06) // OID
+			return ERR_TEMPLATE;
+		p += 2 + p[1]; // skip OID
+		if (p[0] != 0xA0 || p[1] != 0x82) // CONT [0]
+			return ERR_TEMPLATE;
+		l = p[2] << 8 | p[3];
+		l -= delta;
+		p[2] = l >> 8; p[3] = l; // adjust length
+		p += 4;
+
+		if (p[0] != 0x30 || p[1] != 0x82) // SEQUENCE
+			return ERR_TEMPLATE;
+		l = p[2] << 8 | p[3];
+		l -= delta;
+		p[2] = l >> 8; p[3] = l; // adjust length
+		p += 4;
+
+		if (p[0] != 0x02) // INTERGER version
+			return ERR_TEMPLATE;
+		p += 2 + p[1]; // skip
+		if (p[0] != 0x31) // SET 
+			return ERR_TEMPLATE;
+		p += 2 + p[1]; // skip
+		if (p[0] != 0x30) // SEQUENCE
+			return ERR_TEMPLATE;
+		p += 2 + p[1]; // skip
+		if (p[0] != 0xA0 || p[1] != 0x82) // CONT [0]
+			return ERR_TEMPLATE;
+		p += 4 + (p[2] << 8 | p[3]); // skip
+		if (p[0] != 0x31 || p[1] != 0x81) // SET
+			return ERR_TEMPLATE;
+		l = p[2];
+		l -= delta;
+		p[2] = l; // adjust length
+		p += 3;
+
+		if (p[0] != 0x30 || p[1] != 0x81) // SEQUENCE
+			return ERR_TEMPLATE;
+		l = p[2];
+		l -= delta;
+		p[2] = l; // adjust length
+
+		// OCTET string containing the signature
+		// works because the the length is 70, 71 or 72
+		This->pCms[This->SignatureOff - 1] -= delta; // adjust length
 	}
 	return rc;
 }
@@ -580,7 +592,7 @@ int EXPORT_FUNC sign_hash2(
 		rc = PatchRSATemplate(hash, hashLen);
 	else if (This->SignatureSize == 72)
 		rc = PatchECDSATemplate(hash, hashLen);
-	if (rc == 72 || rc == 256) {
+	if (rc == 70 || rc == 71 || rc == 72 || rc == 256) {
 		*ppCms = This->pCms;
 		return This->CMSLen; // OK
 	}
