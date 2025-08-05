@@ -414,7 +414,7 @@ static int checkForNewPCSCToken(struct p11Slot_t *slot)
 
 	FUNC_CALLED();
 
-	rv = SCardConnect(slot->context, slot->readerName, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T1, &slot->card, &dwActiveProtocol);
+	rv = SCardConnect(slot->context, slot->readerName, SCARD_SHARE_EXCLUSIVE, SCARD_PROTOCOL_T1, &slot->card, &dwActiveProtocol);
 
 #ifdef DEBUG
 	debug("SCardConnect (%i, %s): %s\n", slot->id, slot->readerName, pcsc_error_to_string(rv, str75));

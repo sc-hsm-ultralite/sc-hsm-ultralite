@@ -113,7 +113,7 @@ int SC_Open(const char *pin, const char* notused)
 	for (readerName = readerNames; readerName[0] != 0; readerName += len) {
 		DWORD proto;
 		len = strlen(readerName) + 1;
-		rc = SCardConnect(hContext, readerName, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T1, &hCard, &proto);
+		rc = SCardConnect(hContext, readerName, SCARD_SHARE_EXCLUSIVE, SCARD_PROTOCOL_T1, &hCard, &proto);
 		if (rc == SCARD_S_SUCCESS) {
 			if (SC_Logon(NULL) == 0) {
 				found = 1;

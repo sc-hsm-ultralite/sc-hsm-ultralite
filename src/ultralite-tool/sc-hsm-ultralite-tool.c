@@ -169,7 +169,7 @@ int UnlockPin(const char *sopin)
 		NULL, 0,
 		&sw1sw2);
 	SC_Close();
-	if (rc < 0)
+if (rc < 0)
 		return rc;
 	return sw1sw2;
 }
